@@ -1,5 +1,6 @@
 package org.example.crudbiblioteca.Controladores;
 
+import jakarta.validation.Valid;
 import org.example.crudbiblioteca.DTO.Libro;
 import org.example.crudbiblioteca.Interfaces.LibrosRepository;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ public class CRUDLIBRO {
     }
 
     //GETTER QUE DEVUELVE TODOS LOS LIRBOS DE LA BBDD
+
     @GetMapping
     public ResponseEntity get() {
         return ResponseEntity.ok(librosRepository.findAll());
@@ -22,21 +24,21 @@ public class CRUDLIBRO {
 
     //GETTER DE UN LIBRO SOLO PASANDO SU ISBN
     @PostMapping("/{isbn}")
-    public ResponseEntity get(@PathVariable String isbn) {
+    public ResponseEntity get(@Valid @PathVariable String isbn) {
         Libro l = librosRepository.findById(isbn).get();
         return ResponseEntity.ok(l);
     }
 
     //AÑADIR UN LIBRO CON PARAMETROS
     @PostMapping
-    public ResponseEntity post(@RequestBody Libro libro) {
+    public ResponseEntity post(@Valid @RequestBody Libro libro) {
         librosRepository.save(libro);
         return ResponseEntity.ok(libro);
     }
 
     //MODIFICAR UN LIBRO CON PARÁMETROS
     @PutMapping
-    public ResponseEntity update(@RequestBody Libro libro) {
+    public ResponseEntity update(@Valid @RequestBody Libro libro) {
         librosRepository.save(libro);
         return ResponseEntity.ok(libro);
     }

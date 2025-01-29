@@ -1,5 +1,6 @@
 package org.example.crudbiblioteca.Controladores;
 
+import jakarta.validation.Valid;
 import org.example.crudbiblioteca.DTO.Libro;
 import org.example.crudbiblioteca.DTO.Usuario;
 import org.example.crudbiblioteca.Interfaces.UsuariosRepository;
@@ -24,21 +25,21 @@ public class CRUDUSUARIO {
 
     //GETTER DE UN USUARIO SOLO PASANDO SU ID
     @PostMapping("/{id}")
-    public ResponseEntity get(@PathVariable String id) {
+    public ResponseEntity get(@Valid @PathVariable String id) {
         Usuario l = usuariosRepository.findById(id).get();
         return ResponseEntity.ok(l);
     }
 
     //AÑADIR UN USUARIO CON PARAMETROS
     @PostMapping
-    public ResponseEntity post(@RequestBody Usuario usuario) {
+    public ResponseEntity post(@Valid @RequestBody Usuario usuario) {
         usuariosRepository.save(usuario);
         return ResponseEntity.ok(usuario);
     }
 
     //MODIFICAR UN USUARIO CON PARÁMETROS
     @PutMapping
-    public ResponseEntity update(@RequestBody Usuario usuario) {
+    public ResponseEntity update(@Valid @RequestBody Usuario usuario) {
         usuariosRepository.save(usuario);
         return ResponseEntity.ok(usuario);
     }

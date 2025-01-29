@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
@@ -15,6 +16,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Table(name = "Prestamo", schema = "bibliotecaNueva")
+@Data
 public class Prestamo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +28,7 @@ public class Prestamo {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "usuario_id", nullable = false)
     //EVITAR COMPLEJIDAD CICLOMÁTICA
-    @JsonIgnore
+    //@JsonIgnore
     @JsonIncludeProperties({"id"})
     private Usuario usuario;
 
@@ -42,7 +44,7 @@ public class Prestamo {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ejemplar_id", nullable = false)
     //EVITAR COMPLEJIDAD CICLOMÁTICA
-    @JsonIgnore
+    //@JsonIgnore
     @JsonIncludeProperties({"id"})
     private Ejemplar ejemplar;
 
@@ -50,6 +52,6 @@ public class Prestamo {
     @Override
     public String toString() {
         return String.format(
-                "%s, %s, %s, %s", this.id, this.usuario, this.fechaInicio, this.fechaDevolucion);
+                "%s, %s, %s, %s", this.id, this.usuario.getId(), this.fechaInicio, this.fechaDevolucion);
     }
 }

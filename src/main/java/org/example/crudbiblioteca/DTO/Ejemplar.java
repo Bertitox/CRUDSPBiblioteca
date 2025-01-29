@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -18,6 +20,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table(name = "Ejemplar", schema = "bibliotecaNueva")
+@Data
 public class Ejemplar {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +32,14 @@ public class Ejemplar {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "isbn", nullable = false)
     //EVITAR COMPLEJIDAD CICLOMÁTICA
-    @JsonIgnore
+    //@JsonIgnore
     @JsonIncludeProperties({"isbn"})
     private Libro isbn;
 
     @ColumnDefault("'Disponible'")
     @Lob
     @Column(name = "estado")
+    @Pattern(regexp = "^(Disponible|Prestado|Dañado)", message = "ESTADO INVÁLIDO")
     private String estado;
 
 
